@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="(and other selected topics in app development/deployment)" />
+  <title>How to make a GroupMe bot</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <style>
+  div.slide h1 {
+    padding-left: 0;
+    padding-right: 20pt;
+    padding-top: 4pt;
+    padding-bottom: 4pt;
+    margin-top: 12pt;
+    margin-left: 10pt;
+    margin-right: 60pt;
+    margin-bottom: 0.5em;
+    display: block; 
+    font-size: 160%;
+    line-height: 1.2em;
+    background: transparent;
+  }
+  div.slide img {
+    height: 320pt;
+  }
+  </style>
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">How to make a GroupMe bot</h1>
+  <p class="author">
+(and other selected topics in app development/deployment)
+  </p>
+  <p class="date">Simon Bilsky-Rollins</p>
+</div>
+<div id="outline" class="slide section level1">
+<h1>Outline</h1>
+<ul class="incremental">
+<li>What is a bot?</li>
+<li>What do you need to make a bot?</li>
+<li>The story of Beep Boop</li>
+<li>Testing</li>
+<li>Deployment</li>
+</ul>
+</div>
+<div id="what-is-a-bot" class="slide section level1">
+<h1>What is a bot?</h1>
+<ul class="incremental">
+<li>A computer that engages in conversation with a human</li>
+<li>Examples: Siri, Alexa, Cortana, Google</li>
+<li>Here: memes and canned jokes = conversation</li>
+</ul>
+</div>
+<div id="what-do-you-need-to-make-a-bot" class="slide section level1">
+<h1>What do you need to make a bot?</h1>
+<ul class="incremental">
+<li>Medium for human-computer interaction</li>
+<li>A computer connected to this medium</li>
+<li>A program to tell the computer how to participate in the conversation</li>
+</ul>
+</div>
+<div id="the-story-of-beep-boop" class="slide section level1">
+<h1>The story of Beep Boop</h1>
+<ul class="incremental">
+<li>Step 1: Get a key from GroupMe
+<ul class="incremental">
+<li>Go to the <a href="https://dev.groupme.com">GroupMe API portal</a></li>
+</ul></li>
+<li>Step 2: Hello world
+<ul class="incremental">
+<li><p><code>test.json</code></p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;bot_id&quot;</span>  <span class="fu">:</span> <span class="st">&quot;j5abcdefg&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;text&quot;</span>    <span class="fu">:</span> <span class="st">&quot;Hello world&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;attachments&quot;</span> <span class="fu">:</span> <span class="ot">[</span>
+    <span class="fu">{</span>
+      <span class="dt">&quot;type&quot;</span>  <span class="fu">:</span> <span class="st">&quot;image&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;url&quot;</span>   <span class="fu">:</span> <span class="st">&quot;https://i.groupme.com/somethingsomething.large&quot;</span>
+    <span class="fu">}</span>
+  <span class="ot">]</span>
+<span class="fu">}</span></code></pre></div></li>
+<li><div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">curl</span> -X POST -d @test.json -H <span class="st">&#39;Content-Type: application/json&#39;</span> https://api.groupme.com/v3/bots/post</code></pre></div></li>
+</ul></li>
+<li>Step 3: Implement a <strong>callback server</strong>
+<ul class="incremental">
+<li><a href="https://github.com/groupme/bot-tutorial-nodejs">Starter Node.js code from GroupMe</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="the-story-of-beep-boop-cont." class="slide section level1">
+<h1>The story of Beep Boop (cont.)</h1>
+<ul class="incremental">
+<li>Step 4: Define what the server responds to, and how
+<ul class="incremental">
+<li><p>Regex! For example, to match a message that mentions the word &quot;meme&quot; or &quot;memes&quot;:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ss">/</span><span class="sc">\b</span><span class="ss">memes</span><span class="sc">?\b</span><span class="ss">/i</span></code></pre></div>
+<div class="figure">
+<img src="https://imgs.xkcd.com/comics/regular_expressions.png" />
+
+</div></li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>
