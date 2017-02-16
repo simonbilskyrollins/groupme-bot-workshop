@@ -84,8 +84,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>What is a bot?</li>
 <li>What do you need to make a bot?</li>
 <li>The story of Beep Boop</li>
-<li>Testing</li>
 <li>Deployment</li>
+<li>Testing</li>
 </ul>
 </div>
 <div id="what-is-a-bot" class="slide section level1">
@@ -135,16 +135,98 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="the-story-of-beep-boop-cont." class="slide section level1">
 <h1>The story of Beep Boop (cont.)</h1>
 <ul class="incremental">
-<li>Step 4: Define what the server responds to, and how
+<li>Step 4: Define what the server responds to
 <ul class="incremental">
 <li><p>Regex! For example, to match a message that mentions the word &quot;meme&quot; or &quot;memes&quot;:</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ss">/</span><span class="sc">\b</span><span class="ss">memes</span><span class="sc">?\b</span><span class="ss">/i</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> memeRegex <span class="op">=</span> <span class="ss">/</span><span class="sc">\b</span><span class="ss">memes</span><span class="sc">?\b</span><span class="ss">/i</span></code></pre></div>
 <div class="figure">
 <img src="https://imgs.xkcd.com/comics/regular_expressions.png" />
 
 </div></li>
 </ul></li>
 </ul>
+</div>
+<div id="the-story-of-beep-boop-cont.-1" class="slide section level1">
+<h1>The story of Beep Boop (cont.)</h1>
+<ul class="incremental">
+<li><p>Step 5: Tell the bot what to say in response</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">message</span>.<span class="va">text</span>.<span class="at">match</span>(memeRegex)) <span class="op">{</span>
+  <span class="kw">var</span> botResponse <span class="op">=</span> <span class="st">&#39;I hope this brightens your day&#39;</span>
+  <span class="at">postMessage</span>(botResponse)
+<span class="op">}</span></code></pre></div></li>
+</ul>
+</div>
+<div id="the-story-of-beep-boop-cont.-2" class="slide section level1">
+<h1>The story of Beep Boop (cont.)</h1>
+<ul class="incremental">
+<li><p>Step 6: Setup your project environment</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">nano</span> .env
+<span class="ex">npm</span> install</code></pre></div></li>
+<li><p>Step 7: Test it out!</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">npm</span> start
+<span class="ex">open</span> http://localhost:5000
+<span class="ex">curl</span> -H <span class="st">&quot;Accept: application/json&quot;</span> -H <span class="st">&quot;Content-Type: application/json&quot;</span> \
+    -d @test.json http://localhost:5000</code></pre></div></li>
+</ul>
+</div>
+<div id="the-story-of-beep-boop-cont.-3" class="slide section level1">
+<h1>The story of Beep Boop (cont.)</h1>
+<ul class="incremental">
+<li>Step 8: Let's get some memes
+<ul class="incremental">
+<li>Annoying: GroupMe requires images to be uploaded to their own image service.</li>
+<li>Less annoying: someone already made an npm package to handle (some of) that for us.</li>
+<li>Barely annoying at all: someone has also made an npm package that wraps the Reddit API.</li>
+</ul></li>
+<li>Step 9: Beep Boop remembers
+<ul class="incremental">
+<li>Group members ask Beep Boop to call them by a certain nickname.</li>
+<li>Postgres database to remember nicknames.</li>
+</ul></li>
+</ul>
+</div>
+<div id="deployment" class="slide section level1">
+<h1>Deployment</h1>
+<ul class="incremental">
+<li>We need to deploy our app to some publicly-available server for two main reasons:
+<ul class="incremental">
+<li>GroupMe needs somewhere to send messages to.</li>
+<li>Your laptop isn't always on.</li>
+</ul></li>
+<li>Heroku!
+<ul class="incremental">
+<li>Free hosting</li>
+<li>Free database</li>
+<li>Easy deployment (integrated with GitHub)</li>
+</ul></li>
+</ul>
+</div>
+<div id="deployment-cont." class="slide section level1">
+<h1>Deployment (cont.)</h1>
+<ul class="incremental">
+<li>A few preparations before we deploy:
+<ul class="incremental">
+<li>Need to specify Node.js and NPM versions in <code>package.json</code>.</li>
+<li>Need to configure environment variables on the server.</li>
+</ul></li>
+</ul>
+</div>
+<div id="testing" class="slide section level1">
+<h1>Testing</h1>
+<ul class="incremental">
+<li>Boring!</li>
+<li>Actually kind of important though</li>
+<li>Plus, lots of nice tools that make testing easier
+<ul class="incremental">
+<li>Libraries for syntax checking</li>
+<li>Libraries for unit testing</li>
+<li>Travis for continuous integration</li>
+</ul></li>
+</ul>
+</div>
+<div id="thank-you" class="slide section level1">
+<h1>Thank You!</h1>
+<p>Questions?</p>
 </div>
 </body>
 </html>
